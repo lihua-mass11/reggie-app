@@ -25,3 +25,7 @@ mybatis-plus:
     db-config:
       id-type: assign_id
 
+#设置图片存储路径
+reggie:
+  path: D:/javaProject/SpringBoot项目/reggie-app/src/main/resources/backend/images/menus/
+

@@ -6,6 +6,8 @@ import org.example.reggie.domain.dto.CategoryDTO;
 import org.example.reggie.domain.po.Category;
 import org.example.reggie.domain.po.Employee;
 
+import java.util.List;
+
 /**
  * 菜品分类表示层接口
  */
@@ -31,4 +33,11 @@ public interface CategoryService extends IService<Category> {
      * @param categoryDTO
      */
     void editServiceCategory(CategoryDTO categoryDTO);
+
+    /**
+     * 查找所有菜品类型
+     * @param type
+     * @return
+     */
+    List<Category> listServiceCategory(Integer type);
 }

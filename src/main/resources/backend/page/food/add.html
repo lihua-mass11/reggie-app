@@ -341,12 +341,15 @@
               if (String(res.code) === '1') {
                 this.ruleForm = { ...res.data }
                 this.ruleForm.price = String(res.data.price/100)
+                //菜品分类
                 this.ruleForm.status = res.data.status == '1'
+
                 this.dishFlavors = res.data.flavors && res.data.flavors.map(obj => ({ ...obj, value: JSON.parse(obj.value),showOption: false }))
                 console.log('this.dishFlavors',this.dishFlavors)
                 // this.ruleForm.id = res.data.data.categoryId
                 // this.imageUrl = res.data.data.image
                 //最终像这个地址方式请求,加载当前图片
+                //获取当前图片名进行请求下载
                 this.imageUrl = `/common/download?name=${res.data.image}`
               } else {
                 this.$message.error(res.msg || '操作失败')
@@ -449,8 +452,10 @@
           submitForm(formName, st) {
             this.$refs[formName].validate((valid) => {
               if (valid) {
+                //获取ruleForm的参数对象
                 let params = {...this.ruleForm}
                 // params.flavors = this.dishFlavors
+                //判断状态,this.ruleForm为空 状态0 因为他不为空
                 params.status = this.ruleForm ? 1 : 0
                 //以分为单位
                 params.price *= 100
@@ -458,16 +463,20 @@
                 //map集合
                 //键值类型
                 params.flavors = this.dishFlavors.map(obj => ({ ...obj, value: JSON.stringify(obj.value) }))
-                delete params.dishFlavors
+                delete params.dishFlavors //js对象的参数删除
+
+                //判断菜品图片是否存在
                 if(!this.imageUrl){
-                  this.$message.error('请上传菜品图片')
+                  this.$message.error('请上传菜品图片❤️❤️')
                   return 
                 }
+                //判断是否添加菜品
                 if (this.actionType == 'add') {
                   delete params.id
                   addDish(params).then(res => {
                     if (res.code === 1) {
-                      this.$message.success('菜品添加成功！')
+
+                      this.$message.success(res.data)
                       if (!st) {
                         this.goBack()
                       } else {
@@ -487,10 +496,10 @@
                         }
                       }
                     } else {
-                      this.$message.error(res.msg || '操作失败')
+                      this.$message.error(res.data || '操作失败')
                     }
                   }).catch(err => {
-                    this.$message.error('请求出错了：' + err)
+                    this.$message.error('请求出错了：' + err.msg)
                   })
                 } else {
                   delete params.updateTime

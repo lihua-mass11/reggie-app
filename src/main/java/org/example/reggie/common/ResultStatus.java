@@ -55,6 +55,9 @@ public class ResultStatus {
     @ApiModelProperty("用户身份信息异常")
     public static final Integer USER_NUMBER_ERROR = 21005;
 
+    @ApiModelProperty("名称重复")
+    public static final Integer NAME_REPEATED_ERROR = 21006;
+
     //服务器异常
     @ApiModelProperty("服务器内部异常")
     public static final Integer ENGINE_ERROR = 10500;

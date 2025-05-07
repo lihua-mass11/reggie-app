@@ -93,4 +93,21 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         Category category = BeanUtil.copyProperties(categoryDTO,Category.class);
         Db.updateById(category);
     }
+
+    @Override
+    public List<Category> listServiceCategory(Integer type) {
+        // 根据id查询所有菜品
+        List<Category> categories = baseMapper.selectList(
+                new LambdaQueryWrapper<Category>().
+                        eq(Category::getType,type)
+        );
+
+        if (categories.isEmpty()) {
+            throw new BusinessException(
+                    "您没有添加任何菜系😴😴",
+                    ResultStatus.Empty_VAR_ERROR
+            );
+        }
+        return categories;
+    }
 }

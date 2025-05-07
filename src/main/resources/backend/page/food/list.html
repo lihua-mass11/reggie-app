@@ -170,7 +170,7 @@
                 this.counts = res.data.total
               }
             }).catch(err => {
-              this.$message.error('请求出错了：' + err)
+              this.$message.error(err.msg)
             })
           },
           //图片会自动触发这个函数发送请求,获取数据

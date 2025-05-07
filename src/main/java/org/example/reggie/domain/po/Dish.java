@@ -1,45 +1,46 @@
 package org.example.reggie.domain.po;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.Data;
-import org.apache.commons.codec.digest.Md5Crypt;
-import org.apache.tomcat.util.security.MD5Encoder;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("employee")
-@ApiModel("员工实体")
-public class Employee implements Serializable {
+@ApiModel("菜品实体")
+public class Dish {
 
     @TableId("id")
-    @ApiModelProperty("员工id")
+    @ApiModelProperty("id主键")
     private Long id;
 
-    @ApiModelProperty("员工职位")
+    @ApiModelProperty("菜品名称")
     private String name;
 
-    @ApiModelProperty("员工名称")
-    private String username;
+    @ApiModelProperty("菜品分类id")
+    private Long categoryId;
 
-    @ApiModelProperty("员工密码")
-    private String password;
+    @ApiModelProperty("菜品价格")
+    private BigDecimal price;
 
-    @ApiModelProperty("员工电话号码")
-    private String phone;
+    @ApiModelProperty("商品码")
+    private String code;
 
-    @ApiModelProperty("员工性别")
-    private Integer sex;
+    @ApiModelProperty("图片")
+    private String image;
 
-    @ApiModelProperty("员工身份证")
-    private String idNumber;
+    @ApiModelProperty("描述信息")
+    private String description;
 
-    @ApiModelProperty("员工状态")
+    @ApiModelProperty("0 停售 1 起售")
     private Integer status;
+
+    @ApiModelProperty("顺序")
+    private Integer sort;
 
     @ApiModelProperty("创建时间")
     @TableField(fill = FieldFill.INSERT)
@@ -58,5 +59,4 @@ public class Employee implements Serializable {
     @ApiModelProperty("那个用户对其更新")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateUser;
-
 }

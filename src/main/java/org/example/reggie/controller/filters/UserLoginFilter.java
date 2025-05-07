@@ -78,6 +78,7 @@ public class UserLoginFilter implements Filter {
             log.info("用户登录成功,过滤器: {}","UserLoginFilter");
             //local线程存储
             BaseContext.setCurrentId(employeeId);
+            System.out.println("存储:" + BaseContext.getCurrentId());
             filterChain.doFilter(request,response);
             return;
         }

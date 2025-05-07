@@ -15,6 +15,9 @@ import org.example.reggie.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
 @Api("菜品分类表示层")
 @Slf4j
 @RestController
@@ -29,11 +32,14 @@ public class CategoryController {
     public ResultViewEntity<Page<CategoryVO>> pageCategory(
             @ApiParam("页数") @RequestParam Integer page,
             @ApiParam("每页条数") @RequestParam Integer pageSize,
-            @ApiParam("搜索") @RequestParam(required = false)  String name
+            @ApiParam("搜索") @RequestParam(required = false)  String name,
+            HttpServletResponse response
     ) {
 
         log.info("请求格式: {} ,地址: {}","GET","/category/page");
         log.info("页面:" + page + " ,条数:" + pageSize + " ,名称:" + name);
+
+        response.setHeader("Access-Control-Allow-Origin","*");
 
         //数据转换
         Page<Category> categoryPage =
@@ -85,5 +91,19 @@ public class CategoryController {
         categoryService.removeById(Long.parseLong(ids));
 
         return ResultViewEntity.successful("恭喜您成功删除😁😁");
+    }
+
+    @ApiOperation("菜品分类集合接口")
+    @GetMapping("/list")
+    public ResultViewEntity<List<CategoryVO>> listCategory(Integer type) {
+
+        log.info("请求格式: {} ,地址: {}","GET","/category/list");
+
+        return ResultViewEntity.successful(
+                BeanUtil.copyToList(
+                        categoryService.listServiceCategory(type),
+                        CategoryVO.class
+                )
+        );
     }
 }

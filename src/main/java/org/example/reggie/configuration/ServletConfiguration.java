@@ -20,4 +20,5 @@ public class ServletConfiguration {
         filterRegistrationBean.addUrlPatterns("/*");
         return filterRegistrationBean;
     }
+
 }
